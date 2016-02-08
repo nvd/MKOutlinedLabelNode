@@ -86,10 +86,10 @@ class MKOutlinedLabelNode: SKLabelNode {
     }
 
     private func positionBorder(border: SKShapeNode) -> CGPoint {
-        let sizeText = self.calculateAccumulatedFrame()
+        let sizeText = CGRect(origin: self.frame.origin, size: self.frame.size)
         let sizeBorder = border.calculateAccumulatedFrame()
-        let offsetX = (sizeBorder.width - sizeText.width) / 2
-        
-        return CGPointMake(-(sizeBorder.width / 2) + offsetX, 1)
+        let offsetX = (sizeBorder.width - sizeText.width) * 0.65
+        let offsetY = (sizeBorder.height - sizeText.height) * 0.2
+        return CGPointMake(-sizeBorder.width/2 + offsetX, -sizeText.height + offsetY)
     }
 }
