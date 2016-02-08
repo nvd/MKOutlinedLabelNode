@@ -9,13 +9,13 @@ import UIKit
 import SpriteKit
 
 class MKOutlinedLabelNode: SKLabelNode {
-    
+
     var borderColor: UIColor = UIColor.blackColor()
-    
+
     var outlinedText: String! {
         didSet { drawText() }
     }
-    
+
     private var border: SKShapeNode?
     
     required init?(coder aDecoder: NSCoder) { super.init(coder: aDecoder) }
@@ -34,7 +34,7 @@ class MKOutlinedLabelNode: SKLabelNode {
             borderNode.removeFromParent()
             border = nil
         }
-        
+
         if let text = outlinedText {
             self.text = text
             if let path = createBorderPathForText() {
@@ -45,12 +45,12 @@ class MKOutlinedLabelNode: SKLabelNode {
                 border.path = path
                 border.position = positionBorder(border)
                 addChild(border)
-                
+
                 self.border = border
             }
         }
     }
-    
+
     private func getTextAsCharArray() -> [UniChar] {
         var chars = [UniChar]()
         
@@ -59,14 +59,14 @@ class MKOutlinedLabelNode: SKLabelNode {
         }
         return chars
     }
-    
+
     private func createBorderPathForText() -> CGPathRef? {
         let chars = getTextAsCharArray()
         let borderFont = CTFontCreateWithName(self.fontName, self.fontSize, nil)
-        
+
         var glyphs = Array<CGGlyph>(count: chars.count, repeatedValue: 0)
         let gotGlyphs = CTFontGetGlyphsForCharacters(borderFont, chars, &glyphs, chars.count)
-        
+
         if gotGlyphs {
             var advances = Array<CGSize>(count: chars.count, repeatedValue: CGSize())
             CTFontGetAdvancesForGlyphs(borderFont, CTFontOrientation.OrientationHorizontal, glyphs, &advances, chars.count);
@@ -79,13 +79,12 @@ class MKOutlinedLabelNode: SKLabelNode {
                 CGPathAddPath(letters, &t, letter)
                 xPosition = xPosition + advances[index].width
             }
-            
             return letters
         } else {
             return nil
         }
     }
-    
+
     private func positionBorder(border: SKShapeNode) -> CGPoint {
         let sizeText = self.calculateAccumulatedFrame()
         let sizeBorder = border.calculateAccumulatedFrame()
