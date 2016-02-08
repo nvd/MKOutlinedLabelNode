@@ -41,7 +41,7 @@ class MKOutlinedLabelNode: SKLabelNode {
                 let border = SKShapeNode()
 
                 border.strokeColor = borderColor
-                border.lineWidth = 7;
+                border.lineWidth = 7
                 border.path = path
                 border.position = positionBorder(border)
                 addChild(border)
@@ -53,8 +53,8 @@ class MKOutlinedLabelNode: SKLabelNode {
 
     private func getTextAsCharArray() -> [UniChar] {
         var chars = [UniChar]()
-        
-        for codeUnit in text.utf16 {
+
+        for codeUnit in text!.utf16 {
             chars.append(codeUnit)
         }
         return chars
@@ -69,8 +69,8 @@ class MKOutlinedLabelNode: SKLabelNode {
 
         if gotGlyphs {
             var advances = Array<CGSize>(count: chars.count, repeatedValue: CGSize())
-            CTFontGetAdvancesForGlyphs(borderFont, CTFontOrientation.OrientationHorizontal, glyphs, &advances, chars.count);
-            
+            CTFontGetAdvancesForGlyphs(borderFont, CTFontOrientation.Horizontal, glyphs, &advances, chars.count)
+
             let letters = CGPathCreateMutable()
             var xPosition = 0 as CGFloat
             for index in 0...(chars.count - 1) {
